@@ -1,0 +1,5 @@
+name: smp
+version: ${version}
+author: athinaslime
+main: mug.bibus.smp.SMPPlugin
+api-version: 1.21.3
