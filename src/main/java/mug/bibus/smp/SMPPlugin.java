@@ -6,6 +6,7 @@ import java.util.Arrays;
 import lombok.Getter;
 import mug.bibus.smp.commands.GracePeriodCommand;
 import mug.bibus.smp.handlers.CombatHandler;
+import mug.bibus.smp.handlers.HomeHandler;
 import mug.bibus.smp.listeners.CombatListener;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,10 +16,12 @@ public class SMPPlugin extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
 
     private CombatHandler combatHandler;
+    private HomeHandler homeHandler;
 
     @Override
     public void onEnable() {
         combatHandler = new CombatHandler();
+        homeHandler = new HomeHandler(this);
 
         liteCommands = LiteBukkitFactory.builder("smp", this)
                 .commands(
