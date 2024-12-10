@@ -18,6 +18,7 @@ public class GracePeriodCommand {
     @Execute
     public void executeGracePeriod() {
         combatConfiguration.setGracePeriod(!combatConfiguration.isGracePeriod());
+        combatConfiguration.saveConfiguration();
         Bukkit.broadcast(combatConfiguration.isGracePeriod()
                 ? Component.text("Grace Period has been disabled. You are now able to hit other players").color(CC.PRIMARY)
                 : CC.GRACE_PERIOD_MESSAGE);
