@@ -1,7 +1,7 @@
 package mug.bibus.smp.listeners;
 
 import lombok.RequiredArgsConstructor;
-import mug.bibus.smp.handlers.CombatHandler;
+import mug.bibus.smp.configuration.CombatConfiguration;
 import mug.bibus.smp.utilities.CC;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @RequiredArgsConstructor
 public class CombatListener implements Listener {
-    private final CombatHandler combatHandler;
+    private final CombatConfiguration combatConfiguration;
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -31,7 +31,7 @@ public class CombatListener implements Listener {
 
         if (!(victim.getType() == EntityType.PLAYER) && !(attacker.getType() == EntityType.PLAYER)) return;
 
-        if (combatHandler.isGracePeriod()) {
+        if (combatConfiguration.isGracePeriod()) {
             attacker.sendMessage(CC.GRACE_PERIOD_MESSAGE);
             event.setCancelled(true);
         }
@@ -46,7 +46,7 @@ public class CombatListener implements Listener {
 
         if (!(event.getHitEntity() instanceof Player)) return;
 
-        if (combatHandler.isGracePeriod()) {
+        if (combatConfiguration.isGracePeriod()) {
             shooter.sendMessage(CC.GRACE_PERIOD_MESSAGE);
             event.setCancelled(true);
         }

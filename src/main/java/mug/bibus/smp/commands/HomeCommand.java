@@ -4,8 +4,9 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import lombok.RequiredArgsConstructor;
-import mug.bibus.smp.handlers.HomeHandler;
+import mug.bibus.smp.configuration.HomeConfiguration;
 import mug.bibus.smp.utilities.CC;
+import mug.bibus.smp.utilities.LocationUtility;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -13,11 +14,11 @@ import org.bukkit.entity.Player;
 @Command(name = "home")
 @RequiredArgsConstructor
 public class HomeCommand {
-    private final HomeHandler homeHandler;
+    private final HomeConfiguration homeConfiguration;
 
     @Execute
     public void executeHome(@Context Player player) {
-        Location home = homeHandler.getHome(player);
+        Location home = LocationUtility.parseToLocation(homeConfiguration.getHomes().get(player.getUniqueId()));
 
         if (home == null) {
             player.sendMessage(Component.text("You do not have a Home setup, please use the ").color(CC.RED)
@@ -32,7 +33,7 @@ public class HomeCommand {
 
     @Execute(name = "set")
     public void executeHomeSet(@Context Player player) {
-        homeHandler.saveHome(player, player.getLocation());
+        homeConfiguration.getHomes().put(player.getUniqueId(), LocationUtility.parseToString(player.getLocation()));
         player.sendMessage(Component.text("You have set your Home location.").color(CC.PRIMARY));
     }
 }
