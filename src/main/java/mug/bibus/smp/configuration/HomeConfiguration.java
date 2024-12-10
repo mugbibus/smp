@@ -1,14 +1,24 @@
 package mug.bibus.smp.configuration;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import pl.mikigal.config.Config;
-import pl.mikigal.config.annotation.ConfigName;
+import lombok.Getter;
+import mug.bibus.smp.SMPPlugin;
+import mug.bibus.smp.api.config.StaticConfiguration;
 
-@ConfigName("homes.yml")
-public interface HomeConfiguration extends Config {
-    default Map<UUID, String> getHomes() {
-        return new HashMap<>();
+@Getter
+public class HomeConfiguration implements StaticConfiguration {
+    private Map<UUID, String> homes = new HashMap<>();
+
+    public void saveConfiguration() {
+        try {
+            SMPPlugin.getInstance().getConfigurationService().saveConfiguration(this,
+                    new File(SMPPlugin.getInstance().getDataFolder(), "homes.json"));
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
 }

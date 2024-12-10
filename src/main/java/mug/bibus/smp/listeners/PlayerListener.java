@@ -18,7 +18,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         PlayerInventory playerInventory = player.getInventory();
 
-        playerInventory.addItem(new ItemStack(Material.COOKED_BEEF, 32));
+        if (!player.hasPlayedBefore()) playerInventory.addItem(new ItemStack(Material.COOKED_BEEF, 32));
         event.joinMessage(Component.text(player.getName() + " has joined the server.").color(CC.PRIMARY));
     }
 

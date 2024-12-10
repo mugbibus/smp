@@ -2,8 +2,11 @@ package mug.bibus.smp;
 
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import java.io.File;
 import java.util.Arrays;
 import lombok.Getter;
+import mug.bibus.smp.api.config.ConfigurationService;
+import mug.bibus.smp.api.config.JsonConfigurationService;
 import mug.bibus.smp.commands.GracePeriodCommand;
 import mug.bibus.smp.commands.HomeCommand;
 import mug.bibus.smp.configuration.CombatConfiguration;
@@ -12,33 +15,22 @@ import mug.bibus.smp.listeners.CombatListener;
 import mug.bibus.smp.listeners.PlayerListener;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.mikigal.config.ConfigAPI;
-import pl.mikigal.config.style.CommentStyle;
-import pl.mikigal.config.style.NameStyle;
 
 @Getter
 public class SMPPlugin extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
 
-    private HomeConfiguration homeConfiguration;
+    private ConfigurationService configurationService;
     private CombatConfiguration combatConfiguration;
+    private HomeConfiguration homeConfiguration;
 
     @Override
     public void onEnable() {
-        homeConfiguration = ConfigAPI.init(
-                HomeConfiguration.class,
-                NameStyle.CAMEL_CASE,
-                CommentStyle.INLINE,
-                true,
-                this
-        );
-        combatConfiguration = ConfigAPI.init(
-                CombatConfiguration.class,
-                NameStyle.CAMEL_CASE,
-                CommentStyle.INLINE,
-                true,
-                this
-        );
+        configurationService = new JsonConfigurationService();
+        combatConfiguration = configurationService.loadConfiguration(CombatConfiguration.class,
+                new File(getDataFolder(), "combat.json"));
+        homeConfiguration = configurationService.loadConfiguration(HomeConfiguration.class,
+                new File(getDataFolder(), "homes.json"));
 
         liteCommands = LiteBukkitFactory.builder("smp", this)
                 .commands(
@@ -55,6 +47,9 @@ public class SMPPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        combatConfiguration.saveConfiguration();
+        homeConfiguration.saveConfiguration();
+
         liteCommands.unregister();
     }
 

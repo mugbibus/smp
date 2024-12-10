@@ -34,6 +34,7 @@ public class HomeCommand {
     @Execute(name = "set")
     public void executeHomeSet(@Context Player player) {
         homeConfiguration.getHomes().put(player.getUniqueId(), LocationUtility.parseToString(player.getLocation()));
+        homeConfiguration.saveConfiguration();
         player.sendMessage(Component.text("You have set your Home location.").color(CC.PRIMARY));
     }
 }

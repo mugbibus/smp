@@ -1,13 +1,22 @@
 package mug.bibus.smp.configuration;
 
-import pl.mikigal.config.Config;
-import pl.mikigal.config.annotation.ConfigName;
+import java.io.File;
+import java.io.IOException;
+import lombok.Getter;
+import lombok.Setter;
+import mug.bibus.smp.SMPPlugin;
+import mug.bibus.smp.api.config.StaticConfiguration;
 
-@ConfigName("combat.yml")
-public interface CombatConfiguration extends Config {
-    default boolean isGracePeriod() {
-        return true;
+@Getter @Setter
+public class CombatConfiguration implements StaticConfiguration {
+    private boolean gracePeriod = true;
+
+    public void saveConfiguration() {
+        try {
+            SMPPlugin.getInstance().getConfigurationService().saveConfiguration(this,
+                    new File(SMPPlugin.getInstance().getDataFolder(), "combat.json"));
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
-
-    void setGracePeriod(boolean gracePeriod);
 }
