@@ -5,7 +5,7 @@ import java.io.IOException;
 import lombok.Getter;
 import lombok.Setter;
 import mug.bibus.smp.SMPPlugin;
-import mug.bibus.smp.api.config.StaticConfiguration;
+import cc.invictusgames.ilib.configuration.StaticConfiguration;
 
 @Getter @Setter
 public class CombatConfiguration implements StaticConfiguration {

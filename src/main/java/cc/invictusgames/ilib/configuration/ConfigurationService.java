@@ -1,4 +1,4 @@
-package mug.bibus.smp.api.config;
+package cc.invictusgames.ilib.configuration;
 
 import java.io.File;
 import java.io.IOException;

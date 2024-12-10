@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import lombok.Getter;
 import mug.bibus.smp.SMPPlugin;
-import mug.bibus.smp.api.config.StaticConfiguration;
+import cc.invictusgames.ilib.configuration.StaticConfiguration;
 
 @Getter
 public class HomeConfiguration implements StaticConfiguration {

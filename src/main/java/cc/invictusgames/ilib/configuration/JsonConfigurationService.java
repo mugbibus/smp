@@ -1,4 +1,4 @@
-package mug.bibus.smp.api.config;
+package cc.invictusgames.ilib.configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
