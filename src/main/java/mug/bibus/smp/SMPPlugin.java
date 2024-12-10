@@ -9,6 +9,7 @@ import mug.bibus.smp.api.config.ConfigurationService;
 import mug.bibus.smp.api.config.JsonConfigurationService;
 import mug.bibus.smp.commands.GracePeriodCommand;
 import mug.bibus.smp.commands.HomeCommand;
+import mug.bibus.smp.commands.TopCommand;
 import mug.bibus.smp.configuration.CombatConfiguration;
 import mug.bibus.smp.configuration.HomeConfiguration;
 import mug.bibus.smp.listeners.CombatListener;
@@ -35,7 +36,8 @@ public class SMPPlugin extends JavaPlugin {
         liteCommands = LiteBukkitFactory.builder("smp", this)
                 .commands(
                         new GracePeriodCommand(combatConfiguration),
-                        new HomeCommand(homeConfiguration)
+                        new HomeCommand(homeConfiguration),
+                        new TopCommand()
                 )
                 .build();
 
