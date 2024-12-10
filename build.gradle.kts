@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java")
+    id("com.gradleup.shadow") version "9.0.0-beta4"
 }
 
 group = "mug.bibus"
@@ -18,4 +21,15 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.36")
 
     implementation("dev.rollczi:litecommands-bukkit:3.9.1")
+}
+
+tasks.processResources {
+    filesMatching("plugin.yml") {
+        expand("version" to project.version)
+    }
+}
+
+tasks.withType<ShadowJar> {
+    archiveClassifier.set("");
+    archiveFileName.set(project.name + "-" + project.version + ".jar")
 }
