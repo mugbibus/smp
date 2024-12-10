@@ -10,8 +10,10 @@ import mug.bibus.smp.api.config.JsonConfigurationService;
 import mug.bibus.smp.commands.GracePeriodCommand;
 import mug.bibus.smp.commands.HomeCommand;
 import mug.bibus.smp.commands.TopCommand;
+import mug.bibus.smp.commands.WhitelistCommand;
 import mug.bibus.smp.configuration.CombatConfiguration;
 import mug.bibus.smp.configuration.HomeConfiguration;
+import mug.bibus.smp.configuration.WhitelistConfiguration;
 import mug.bibus.smp.listeners.CombatListener;
 import mug.bibus.smp.listeners.PlayerListener;
 import org.bukkit.command.CommandSender;
@@ -24,6 +26,7 @@ public class SMPPlugin extends JavaPlugin {
     private ConfigurationService configurationService;
     private CombatConfiguration combatConfiguration;
     private HomeConfiguration homeConfiguration;
+    private WhitelistConfiguration whitelistConfiguration;
 
     @Override
     public void onEnable() {
@@ -32,18 +35,21 @@ public class SMPPlugin extends JavaPlugin {
                 new File(getDataFolder(), "combat.json"));
         homeConfiguration = configurationService.loadConfiguration(HomeConfiguration.class,
                 new File(getDataFolder(), "homes.json"));
+        whitelistConfiguration = configurationService.loadConfiguration(WhitelistConfiguration.class,
+                new File(getDataFolder(), "whitelist.json"));
 
         liteCommands = LiteBukkitFactory.builder("smp", this)
                 .commands(
                         new GracePeriodCommand(combatConfiguration),
                         new HomeCommand(homeConfiguration),
-                        new TopCommand()
+                        new TopCommand(),
+                        new WhitelistCommand(whitelistConfiguration)
                 )
                 .build();
 
         Arrays.asList(
                 new CombatListener(combatConfiguration),
-                new PlayerListener()
+                new PlayerListener(whitelistConfiguration)
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

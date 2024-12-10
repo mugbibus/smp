@@ -29,7 +29,7 @@ public class CombatListener implements Listener {
         Entity victim = event.getEntity();
         Entity attacker = event.getDamager();
 
-        if (!(victim.getType() == EntityType.PLAYER) && !(attacker.getType() == EntityType.PLAYER)) return;
+        if (victim.getType() != EntityType.PLAYER || attacker.getType() != EntityType.PLAYER) return;
 
         if (combatConfiguration.isGracePeriod()) {
             attacker.sendMessage(CC.GRACE_PERIOD_MESSAGE);
