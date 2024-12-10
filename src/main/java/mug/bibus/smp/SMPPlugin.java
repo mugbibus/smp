@@ -2,6 +2,7 @@ package mug.bibus.smp;
 
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import java.io.IOException;
 import java.util.Arrays;
 import lombok.Getter;
 import mug.bibus.smp.commands.GracePeriodCommand;
@@ -37,6 +38,12 @@ public class SMPPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         liteCommands.unregister();
+
+        try {
+            homeHandler.getHomesConfig().save(homeHandler.getHomesFile());
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
 
     public static SMPPlugin getInstance() {

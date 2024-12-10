@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "mug.bibus"
-version = "0.0.3"
+version = "0.0.4"
 
 repositories {
     mavenCentral()
@@ -32,4 +32,8 @@ tasks.processResources {
 tasks.withType<ShadowJar> {
     archiveClassifier.set("");
     archiveFileName.set(project.name + "-" + project.version + ".jar")
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("-parameters")
 }
