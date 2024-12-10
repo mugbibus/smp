@@ -9,6 +9,7 @@ import mug.bibus.smp.commands.GracePeriodCommand;
 import mug.bibus.smp.handlers.CombatHandler;
 import mug.bibus.smp.handlers.HomeHandler;
 import mug.bibus.smp.listeners.CombatListener;
+import mug.bibus.smp.listeners.PlayerListener;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +32,8 @@ public class SMPPlugin extends JavaPlugin {
                 .build();
 
         Arrays.asList(
-                new CombatListener(combatHandler)
+                new CombatListener(combatHandler),
+                new PlayerListener()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
