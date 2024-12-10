@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+// This class was taken from https://github.com/ThatKawaiiSam/Utils/blob/master/src/main/java/io/github/thatkawaiisam/utils/LocationUtility.java
 public class LocationUtility {
     public static String parseToString(Location location) {
         return location.getX() + "," +
