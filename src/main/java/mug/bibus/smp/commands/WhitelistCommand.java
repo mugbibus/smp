@@ -21,6 +21,12 @@ public class WhitelistCommand {
     @Execute(name = "add")
     public void executeWhitelistAdd(@Context CommandSender commandSender, @Arg String playerName) {
         UUIDUtility.getFromMojang(playerName).thenAccept(uuid -> {
+            if (whitelistConfiguration.getWhitelistedPlayers().contains(uuid)) {
+                commandSender.sendMessage(Component.text(playerName).color(CC.PRIMARY)
+                        .append(Component.text(" is already whitelisted.").color(CC.RED)));
+                return;
+            }
+
             whitelistConfiguration.getWhitelistedPlayers().add(uuid);
             whitelistConfiguration.saveConfiguration();
 
