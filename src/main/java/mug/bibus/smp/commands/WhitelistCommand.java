@@ -31,7 +31,7 @@ public class WhitelistCommand {
     @Execute(name = "remove")
     public void executeWhitelistRemove(@Context CommandSender commandSender, @Arg String playerName) {
         UUIDUtility.getFromMojang(playerName).thenAccept(uuid -> {
-            if (whitelistConfiguration.getWhitelistedPlayers().contains(uuid)) {
+            if (!whitelistConfiguration.getWhitelistedPlayers().contains(uuid)) {
                 commandSender.sendMessage(Component.text(playerName).color(CC.PRIMARY)
                         .append(Component.text(" is not whitelisted.").color(CC.RED)));
                 return;

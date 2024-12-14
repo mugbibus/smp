@@ -57,6 +57,7 @@ public class SMPPlugin extends JavaPlugin {
     public void onDisable() {
         combatConfiguration.saveConfiguration();
         homeConfiguration.saveConfiguration();
+        whitelistConfiguration.saveConfiguration();
 
         liteCommands.unregister();
     }
