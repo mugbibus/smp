@@ -13,7 +13,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 @Command(name = "whitelist")
-@Permission("op")
+@Permission("smp.whitelist")
 @RequiredArgsConstructor
 public class WhitelistCommand {
     private final WhitelistConfiguration whitelistConfiguration;

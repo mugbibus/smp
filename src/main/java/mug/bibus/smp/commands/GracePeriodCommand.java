@@ -10,7 +10,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 
 @Command(name = "graceperiod")
-@Permission("op")
+@Permission("smp.graceperiod")
 @RequiredArgsConstructor
 public class GracePeriodCommand {
     private final CombatConfiguration combatConfiguration;
