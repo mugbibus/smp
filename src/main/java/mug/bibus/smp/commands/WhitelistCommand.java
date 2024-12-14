@@ -6,11 +6,14 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import lombok.RequiredArgsConstructor;
+import mug.bibus.smp.SMPPlugin;
 import mug.bibus.smp.configuration.WhitelistConfiguration;
 import mug.bibus.smp.utilities.CC;
 import mug.bibus.smp.utilities.UUIDUtility;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 @Command(name = "whitelist")
 @Permission("smp.whitelist")
@@ -47,6 +50,14 @@ public class WhitelistCommand {
             whitelistConfiguration.saveConfiguration();
 
             commandSender.sendMessage(Component.text("You have un-whitelisted " + playerName + ".").color(CC.PRIMARY));
+
+            Bukkit.getScheduler().runTask(SMPPlugin.getInstance(), () -> {
+                Player player = Bukkit.getPlayer(uuid);
+
+                if (player != null) {
+                    player.kick(Component.text("You have been removed from the whitelist.").color(CC.RED));
+                }
+            });
         });
     }
 }
