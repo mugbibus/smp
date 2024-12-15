@@ -27,7 +27,7 @@ public class HomeCommand {
             return;
         }
 
-        player.teleport(home);
+        player.teleportAsync(home);
         player.sendMessage(Component.text("You have been teleported to your Home.").color(CC.PRIMARY));
     }
 
