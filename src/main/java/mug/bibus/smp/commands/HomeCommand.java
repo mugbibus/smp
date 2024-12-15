@@ -27,8 +27,11 @@ public class HomeCommand {
             return;
         }
 
-        player.teleportAsync(home);
-        player.sendMessage(Component.text("You have been teleported to your Home.").color(CC.PRIMARY));
+        player.teleportAsync(home)
+                .thenAccept(success -> {
+                    if (success)
+                        player.sendMessage(Component.text("You have been teleported to your Home.").color(CC.PRIMARY));
+                });
     }
 
     @Execute(name = "set")
