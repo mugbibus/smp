@@ -2,7 +2,9 @@ package mug.bibus.smp.commands;
 
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.cooldown.Cooldown;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
 import mug.bibus.smp.configuration.HomeConfiguration;
 import mug.bibus.smp.utilities.CC;
@@ -17,6 +19,7 @@ public class HomeCommand {
     private final HomeConfiguration homeConfiguration;
 
     @Execute
+    @Cooldown(key = "smp:home", count = 30, unit = ChronoUnit.MINUTES)
     public void executeHome(@Context Player player) {
         Location home = LocationUtility.parseToLocation(homeConfiguration.getHomes().get(player.getUniqueId()));
 
@@ -24,6 +27,13 @@ public class HomeCommand {
             player.sendMessage(Component.text("You do not have a Home setup, please use the ").color(CC.RED)
                     .append(Component.text("/home set").color(CC.PRIMARY))
                     .append(Component.text(" to set a Home location.").color(CC.RED)));
+            return;
+        }
+
+        if (player.getWorld() != home.getWorld()) {
+            player.sendMessage(Component.text("You cannot use this command when your ").color(CC.RED)
+                    .append(Component.text(" Home location ").color(CC.PRIMARY))
+                    .append(Component.text("is in a different world.").color(CC.RED)));
             return;
         }
 

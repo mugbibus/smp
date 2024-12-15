@@ -12,7 +12,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 @Command(name = "top")
-@Cooldown(key = "smp:top", count = 2, unit = ChronoUnit.HOURS)
+@Cooldown(key = "smp:top", count = 1, unit = ChronoUnit.HOURS)
 public class TopCommand {
     @Execute
     public void executeTop(@Context Player player) {
